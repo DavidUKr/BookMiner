@@ -5,7 +5,10 @@ import re
 import nltk
 from nltk.corpus import stopwords
 
-nltk.download('stopwords')
+try:
+    stopwords.words('english')
+except LookupError:
+    nltk.download('stopwords')
 
 def get_book_from_url(book_url):
     

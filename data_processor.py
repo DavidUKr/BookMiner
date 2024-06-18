@@ -84,4 +84,4 @@ def line_is_chapter(dataframe):
     return chapter_list
 
 def add_chapters(book_df):
-    book_df = book_df.assign(chapter = line_is_chapter(book_df))
+    return book_df.assign(chapter = line_is_chapter(book_df))

@@ -4,6 +4,7 @@ import pandas as pd
 import re
 import nltk
 from nltk.corpus import stopwords
+import streamlit as st
 
 try:
     stopwords.words('english')
@@ -48,11 +49,18 @@ def explode_to_words(books_df):
 
 def filter_stopwords(words_df):
     words_df = words_df[~words_df['word'].str.lower().isin(stopwords.words('english'))]
+    words_df = words_df[~words_df['word'].str.lower().isin(["p"])]
     words_df = words_df.dropna()
     return words_df
 
-def sort_by_count(words_df):
+@st.cache_data
+def sort_by_count_book(words_df):
     return words_df.groupby(['word', 'book']).size().sort_values(ascending=False).reset_index(name='count')
+
+@st.cache_data
+def sort_by_count(words_df):
+    return words_df.groupby(['word']).size().sort_values(ascending=False).reset_index(name='count')
+
 
 def add_tf_idf(book_words_df):
     count_df_1 = book_words_df.groupby(['word', 'book']).size().sort_values(ascending=False).reset_index(name='count') # How many appearances each word has in each book

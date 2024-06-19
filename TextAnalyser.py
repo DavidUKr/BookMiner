@@ -1,6 +1,7 @@
 import streamlit as st
 import data_processor as dp
 import data_plotter as dpl
+import information_retrieval as ir
 import pandas as pd
 
 #DATA processing script
@@ -67,6 +68,27 @@ def sentiment_analysis(books_df):
     
     st.write(dpl.sentiment_chapter_plotting(books_df))
     
+@st.experimental_fragment
+def see_rec():
+    top_idf=st.session_state.books_df.sort_values(by='tf_idf', ascending=False)
+        
+    query=""
+    for word in top_idf['word'][:6]:
+        query= query+" "+word
+    
+    with st.container() as retreival_container:
+        retrieval_method=st.radio(
+                "What method should I use?",
+                ["Cosine Similarity", "BM25", "Latent Semantic Indexing"],
+                key="retr_search_radio",
+                horizontal=True,
+            )
+        
+        indices, scores= ir.recommend_documents(query, retreival_method=retrieval_method)
+        
+        for idx, score in zip(indices, scores):
+            with st.container(border=True):
+                st.write(f"Document index: {idx}, BM25 Score: {score}\nDocument: {ir.texts[idx][:1000]}\n") 
 #STREAMLIT
 
 #setup
@@ -143,12 +165,13 @@ with st.container() as process_container:
     if st.button(label="Process :hammer:") and not books_df.empty:
         process_data(books_df)
 
-with st.container() as sentiment_container:
+with st.container(border=True) as sentiment_container:
     if st.button(label="Sentiment analysis :hammer:") and not books_df.empty:
         sentiment_analysis(books_df)
         
-with st.container() as article_recomandations_container:
+with st.container(border=True) as article_recomandations_container:
     st.write("Recomended articles to read based on books topic")
     
-    if st.button(label="See recomendations"):
-        st.write("cool")
+    if st.button(label="See recomendations") and not st.session_state.books_df.empty:
+        see_rec()
+        

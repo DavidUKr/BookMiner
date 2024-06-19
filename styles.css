@@ -1,0 +1,85 @@
+/* styles.css */
+
+/* Global Styles */
+body {
+    background-color: #E9F1F5; /* light background color */
+    color: #333; /* default text color */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header */
+header {
+    background-color: #D4E4E6; /* light mint background for header */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #B3CED5; /* slightly darker mint for border */
+}
+
+/* Main Title */
+h1 {
+    color: #2D4A55; /* dark teal for title */
+    font-size: 2.5em;
+}
+
+/* Containers */
+.stContainer {
+    background-color: #FFFFFF; /* white background for containers */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* subtle shadow */
+    margin: 20px 0;
+    padding: 20px;
+}
+
+/* Buttons */
+.stButton button {
+    background-color: #FA8072; /* coral background for buttons */
+    border: none;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.stButton button:hover {
+    background-color: #E57373; /* darker coral on hover */
+}
+
+/* Radio Buttons */
+.stRadio label {
+    background-color: #F0F4F7; /* light mint for radio button background */
+    border: 1px solid #D4E4E6;
+    border-radius: 5px;
+    color: #2D4A55; /* dark teal text */
+    cursor: pointer;
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+}
+
+.stRadio label:hover {
+    background-color: #D4E4E6; /* darker mint on hover */
+}
+
+/* Dataframe */
+.stDataFrame {
+    border: 1px solid #B3CED5; /* mint border for dataframes */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Plotly Charts */
+.stPlotlyChart {
+    border: 1px solid #B3CED5; /* mint border for charts */
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #D4E4E6; /* light mint background for footer */
+    color: #2D4A55; /* dark teal text */
+    padding: 10px;
+    text-align: center;
+}

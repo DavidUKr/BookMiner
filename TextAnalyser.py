@@ -3,6 +3,8 @@ import data_processor as dp
 import data_plotter as dpl
 import information_retrieval as ir
 import pandas as pd
+import requests
+import topic_modeller as tm
 
 #DATA processing script
 @st.experimental_fragment
@@ -91,7 +93,7 @@ def see_rec():
                 st.write(f"Document index: {idx}, BM25 Score: {score}\nDocument: {ir.texts[idx][:1000]}\n") 
 #STREAMLIT
 
-#setup
+
 st.set_page_config(
     page_title="BookMiner",
     page_icon="static/books.png",
@@ -104,6 +106,8 @@ st.set_page_config(
     }
 )
 
+with open('styles.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 st.title("Book Miner :books: :hammer_and_wrench:")
 
@@ -174,4 +178,12 @@ with st.container(border=True) as article_recomandations_container:
     
     if st.button(label="See recomendations") and not st.session_state.books_df.empty:
         see_rec()
-        
+
+with st.container(border=True) as topic_modeling_container:
+    st.write("Topic modeling on the submitted books")
+    
+    if st.button(label="Model Topics") and len(st.session_state.url_list)>0:
+        for url in st.session_state.url_list:
+            book=requests.get(url).text
+            proc_book=tm.preprocess(book)
+            tm.apply_LDA(proc_doc=proc_book)
